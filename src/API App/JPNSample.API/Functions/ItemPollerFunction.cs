@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading;
-
+using System.Threading.Tasks;
 using JPNSample.API.Core.Data;
 using JPNSample.API.Core.Integration.HackerNews;
 
@@ -22,24 +22,17 @@ namespace JPNSample.API.Functions
         }
 
         [FunctionName("ItemPoller")]
-        public void Run(
+        public async Task Run(
             [TimerTrigger("%PollerTimerExpression%", RunOnStartup = true)]TimerInfo myTimer, 
             ILogger logger, 
-            ExecutionContext executionContext,
             CancellationToken cancellationToken = default)
         {
-            //var config = new ConfigurationBuilder()
-            //    .SetBasePath(executionContext.FunctionAppDirectory)
-            //    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-            //    .AddEnvironmentVariables()
-            //    .Build();
+            
             try
             {
 
                 var topStoryIds = _hackerNewsClient.GetTopStoriesAsync().Result;
-                //Task.Delay(5000).Wait();
-                //var bestStoryIds = _hackerNewsClient.GetBestStoriesAsync().Result;
-                //Task.Delay(5000).Wait();
+                await Task.Delay(1000);
                 var newStoryIds = _hackerNewsClient.GetNewStoriesAsync().Result;
 
                 var orderedIds = topStoryIds
@@ -51,7 +44,7 @@ namespace JPNSample.API.Functions
 
                 var pager = new AsynchronousTaskPager<int, HackerNewsItemsResponseModel>(orderedIds, logger);
                 pager.ResultSelector = id => _hackerNewsClient.GetStoryByIdAsync(id, cancellationToken);
-                pager.RunAsync().Wait();
+                await pager.RunAsync();
             }
             catch (Exception ex)
             {

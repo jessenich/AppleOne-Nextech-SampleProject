@@ -11,7 +11,7 @@ namespace JPNSample.API.Core.Cache
         public T Item { get; set; }
         public DateTime UtcDateCreated { get; set; }
         public DateTime? UtcDateExpired { get; set; }
-        public IDictionary<string, object> ExtendedProperties { get; set; }
+        public IDictionary<string, string> ExtendedProperties { get; set; }
 
         public CacheItem()
         { }
@@ -21,7 +21,7 @@ namespace JPNSample.API.Core.Cache
             this.Item = item ?? throw new ArgumentException(nameof(item));
             this.UtcDateCreated = DateTime.UtcNow;
             this.UtcDateExpired = UtcDateExpired;
-            this.ExtendedProperties = new Dictionary<string, object>();
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
 
         public CacheItem(T item)

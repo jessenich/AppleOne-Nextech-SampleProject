@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using JPNSample.API.Core.Cache;
 using JPNSample.API.Core.Integration.HackerNews;
@@ -12,6 +14,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace JPNSample.API.Functions
 {
@@ -30,23 +33,26 @@ namespace JPNSample.API.Functions
             ILogger logger)
         {
             var idKeys = new List<string>() {
-                //CacheKeys.BestStoriesCacheKey,
                 CacheKeys.NewStoriesCacheKey,
                 CacheKeys.TopStoriesCacheKey
             };
 
+            IEnumerable<dynamic> getGroupedAndSplitResults(IEnumerable<CacheItem<IEnumerable<int>>> caches, string groupingKey)
+            {
+                caches = caches.Where(x => x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey] == groupingKey);
+                return caches
+                    .Select(x => {
+                        return new {
+                            key = x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey],
+                            count = x.Item.Count(),
+                            items = x.Item.Select(item => item)
+                        };
+                    }).ToList();
+            }
+
             var cacheResults = await _cache.GetManyAsync<IEnumerable<int>>(idKeys);
-            var groupedResults = cacheResults.GroupBy(cache => cache.ExtendedProperties["type"]);
-
-            var topResults = groupedResults
-                .Where(x => (string)x.Key == "topStories")
-                .SelectMany(x => x.AsEnumerable())
-                .SelectMany(x => x.Item);
-
-            var newResults = groupedResults
-                .Where(x => (string)x.Key == "newStories")
-                .SelectMany(x => x.AsEnumerable())
-                .SelectMany(x => x.Item);
+            var topResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.TopStoryTypeValue);
+            var newResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.NewStoryTypeValue);
 
             return new OkObjectResult(new {
                 top = topResults,
@@ -77,10 +83,10 @@ namespace JPNSample.API.Functions
                 .Skip((page - 1) * take)
                 .Take(take)
                 .Select(story => new {
-                     author = story.By,
-                     title = story.Title,
-                     url = story.Url
-                 });
+                    author = story.By,
+                    title = story.Title,
+                    url = story.Url
+                });
 
             return new OkObjectResult(storiesResponse);
         }

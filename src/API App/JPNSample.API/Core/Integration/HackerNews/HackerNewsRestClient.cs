@@ -14,8 +14,6 @@ namespace JPNSample.API.Core.Integration.HackerNews
 {
     public class HackerNewsRestClient : IHackerNewsRestClient
     {
-        
-
         private readonly Url _baseFlurlUrl;
         private readonly ICacheProvider _cache;
         private readonly ILogger _logger;
@@ -88,8 +86,8 @@ namespace JPNSample.API.Core.Integration.HackerNews
             var cacheItem = new CacheItem<List<int>>(response, DateTime.UtcNow.AddMinutes(60));
 
             // Add stories for future expansion with minimal data migration
-            cacheItem.ExtendedProperties.Add("urlSource", url.ToString());
-            cacheItem.ExtendedProperties.Add("type", "topStories");
+            cacheItem.ExtendedProperties.Add(CacheExtendedPropertiesConstants.UrlSourceKey, url.ToString());
+            cacheItem.ExtendedProperties.Add(CacheExtendedPropertiesConstants.StoryTypeKey, CacheExtendedPropertiesConstants.TopStoryTypeValue);
             await _cache?.SetAsync(CacheKeys.TopStoriesCacheKey, cacheItem);
 
             return response;
@@ -119,8 +117,8 @@ namespace JPNSample.API.Core.Integration.HackerNews
             var cacheItem = new CacheItem<List<int>>(response, DateTime.UtcNow.AddMinutes(60));
 
             // Add stories for future expansion with minimal data migration
-            cacheItem.ExtendedProperties.Add("urlSource", url.ToString());
-            cacheItem.ExtendedProperties.Add("type", "newStories");
+            cacheItem.ExtendedProperties.Add(CacheExtendedPropertiesConstants.UrlSourceKey, url.ToString());
+            cacheItem.ExtendedProperties.Add(CacheExtendedPropertiesConstants.UrlSourceKey, CacheExtendedPropertiesConstants.NewStoryTypeValue);
             await _cache?.SetAsync(CacheKeys.NewStoriesCacheKey, cacheItem);
 
             return response;
