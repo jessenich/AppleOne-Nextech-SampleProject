@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29503.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JPNSample.API", "JPNSample.API\JPNSample.API.csproj", "{FCE94877-5D49-495B-AD4A-51E48A947895}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCE94877-5D49-495B-AD4A-51E48A947895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCE94877-5D49-495B-AD4A-51E48A947895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCE94877-5D49-495B-AD4A-51E48A947895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCE94877-5D49-495B-AD4A-51E48A947895}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E2693DF-EBCA-41E1-BBC0-4C86A320A7C5}
+	EndGlobalSection
+EndGlobal

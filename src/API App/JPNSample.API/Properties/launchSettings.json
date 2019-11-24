@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "JPNSample.Job.HackerNewsPoller": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRNMENT": "Development"
+      }
+    }
+  }
+}
