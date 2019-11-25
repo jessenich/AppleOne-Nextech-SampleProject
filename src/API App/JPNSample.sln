@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JPNSample.API", "JPNSample.API\JPNSample.API.csproj", "{FCE94877-5D49-495B-AD4A-51E48A947895}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quick_Application1", "Quick Application1\Quick_Application1\Quick_Application1.csproj", "{FF93A537-B2D8-4552-A4FC-69244D4C05DF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "Quick Application1\DAL\DAL.csproj", "{B5201143-DCA0-425A-82FF-3FD0CA0E5684}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JPNSample.Job.PollerFunction", "JPNSample.Job.PollerFunction\JPNSample.Job.PollerFunction.csproj", "{15E99672-F385-42AE-AE2F-9341DE436AC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FCE94877-5D49-495B-AD4A-51E48A947895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCE94877-5D49-495B-AD4A-51E48A947895}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCE94877-5D49-495B-AD4A-51E48A947895}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCE94877-5D49-495B-AD4A-51E48A947895}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FF93A537-B2D8-4552-A4FC-69244D4C05DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FF93A537-B2D8-4552-A4FC-69244D4C05DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FF93A537-B2D8-4552-A4FC-69244D4C05DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FF93A537-B2D8-4552-A4FC-69244D4C05DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5201143-DCA0-425A-82FF-3FD0CA0E5684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5201143-DCA0-425A-82FF-3FD0CA0E5684}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5201143-DCA0-425A-82FF-3FD0CA0E5684}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5201143-DCA0-425A-82FF-3FD0CA0E5684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E99672-F385-42AE-AE2F-9341DE436AC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E99672-F385-42AE-AE2F-9341DE436AC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E99672-F385-42AE-AE2F-9341DE436AC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E99672-F385-42AE-AE2F-9341DE436AC4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

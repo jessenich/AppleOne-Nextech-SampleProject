@@ -20,6 +20,7 @@ namespace JPNSample.API
         {
             builder.Services
                 .AddLogging()
+                .AddHttpContextAccessor()
                 .AddOptions<PollerOptions>()
                 .Configure<IConfiguration>((settings, cfg) => cfg.Bind(settings));
 
@@ -28,7 +29,7 @@ namespace JPNSample.API
                     var options = x.GetService<IOptions<PollerOptions>>();
                     return ConnectionMultiplexer.Connect(options.Value.RedisConnectionString);
                 })
-                .AddScoped<ICacheProvider, RedisCacheProvider>(x => {
+                .AddSingleton<ICacheProvider, RedisCacheProvider>(x => {
                     var multiplexer = x.GetService<ConnectionMultiplexer>();
                     var logger = x.GetService<ILogger<RedisCacheProvider>>();
                     return new RedisCacheProvider(multiplexer, logger);

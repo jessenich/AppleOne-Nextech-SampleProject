@@ -8,8 +8,6 @@ using JPNSample.API.Core.Integration.HackerNews;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 
-using ExecutionContext = Microsoft.Azure.WebJobs.ExecutionContext;
-
 namespace JPNSample.API.Functions
 {
     public class ItemPollerFunction

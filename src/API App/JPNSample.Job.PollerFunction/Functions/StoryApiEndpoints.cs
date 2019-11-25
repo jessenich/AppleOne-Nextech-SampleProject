@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -22,8 +23,9 @@ namespace JPNSample.API.Functions
     {
         private readonly ICacheProvider _cache;
 
-        public StoryApiEndpoints(ICacheProvider cache)
+        public StoryApiEndpoints(HttpContext httpCtx, ICacheProvider cache)
         {
+            httpCtx.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             _cache = cache ?? throw new ArgumentNullException(nameof(cache));
         }
 
