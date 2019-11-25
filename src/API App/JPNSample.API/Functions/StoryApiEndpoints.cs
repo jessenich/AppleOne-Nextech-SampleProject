@@ -40,19 +40,16 @@ namespace JPNSample.API.Functions
             IEnumerable<dynamic> getGroupedAndSplitResults(IEnumerable<CacheItem<IEnumerable<int>>> caches, string groupingKey)
             {
                 caches = caches.Where(x => x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey] == groupingKey);
-                return caches
-                    .Select(x => {
-                        return new {
-                            key = x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey],
-                            count = x.Item.Count(),
-                            items = x.Item.Select(item => item)
-                        };
-                    }).ToList();
+                return caches.Select(x => new {
+                        key = x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey],
+                        count = x.Item.Count(),
+                        items = x.Item.Select(item => item)
+                });
             }
 
             var cacheResults = await _cache.GetManyAsync<IEnumerable<int>>(idKeys);
-            var topResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.TopStoryTypeValue);
-            var newResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.NewStoryTypeValue);
+            var topResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.TopStoryTypeValue).FirstOrDefault();
+            var newResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.NewStoryTypeValue).FirstOrDefault();
 
             return new OkObjectResult(new {
                 top = topResults,
@@ -85,7 +82,9 @@ namespace JPNSample.API.Functions
                 .Select(story => new {
                     author = story.By,
                     title = story.Title,
-                    url = story.Url
+                    url = story.Url,
+                    score = story.Score,
+                    createdAt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(story.Time),
                 });
 
             return new OkObjectResult(storiesResponse);
