@@ -19,7 +19,7 @@ namespace JPNSample.API
         public override void Configure(IFunctionsHostBuilder builder)
         {
             builder.Services
-                .AddLogging()
+                .AddLogging(cfg => cfg.AddConsole().SetMinimumLevel(LogLevel.Debug))
                 .AddHttpContextAccessor()
                 .AddOptions<PollerOptions>()
                 .Configure<IConfiguration>((settings, cfg) => cfg.Bind(settings));

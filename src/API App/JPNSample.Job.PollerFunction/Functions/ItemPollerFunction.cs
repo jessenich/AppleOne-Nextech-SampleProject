@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using JPNSample.API.Core;
 using JPNSample.API.Core.Data;
 using JPNSample.API.Core.Integration.HackerNews;
 
@@ -19,30 +22,30 @@ namespace JPNSample.API.Functions
             _hackerNewsClient = hackerNewsClient ?? throw new ArgumentNullException(nameof(hackerNewsClient));
         }
 
+        
         [FunctionName("ItemPoller")]
         public async Task Run(
             [TimerTrigger("%PollerTimerExpression%", RunOnStartup = true)]TimerInfo myTimer, 
             ILogger logger, 
             CancellationToken cancellationToken = default)
         {
-            
             try
             {
+                IOrderedQueryable<int> orderedIds = null;
+                await Task.WhenAll(
+                    _hackerNewsClient.GetTopStoriesAsync(cancellationToken),
+                    _hackerNewsClient.GetNewStoriesAsync(cancellationToken),
+                    _hackerNewsClient.GetBestStoriesAsync(cancellationToken))
+                .ContinueWith(task => 
+                    orderedIds = task.Result
+                        .SelectMany(model => model.Ids)
+                        .Distinct()
+                        .AsQueryable()
+                        .OrderBy(id => id));
 
-                var topStoryIds = _hackerNewsClient.GetTopStoriesAsync().Result;
-                await Task.Delay(1000);
-                var newStoryIds = _hackerNewsClient.GetNewStoriesAsync().Result;
-
-                var orderedIds = topStoryIds
-                    //.Concat(bestStoryIds)
-                    .Concat(newStoryIds)
-                    .Distinct()
-                    .AsQueryable()
-                    .OrderBy(id => id);
-
-                var pager = new AsynchronousTaskPager<int, HackerNewsItemsResponseModel>(orderedIds, logger);
+                var pager = new AsynchronousTaskPager<int, HackerNewsStoriesResponseModel>(orderedIds, logger);
                 pager.ResultSelector = id => _hackerNewsClient.GetStoryByIdAsync(id, cancellationToken);
-                await pager.RunAsync();
+                await pager.RunAsync(100);
             }
             catch (Exception ex)
             {

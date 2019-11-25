@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UserName>$jpnsample-poller</UserName>
+    <WebPublishMethod>ZipDeploy</WebPublishMethod>
+    <PublishProvider>AzureWebSite</PublishProvider>
+    <LastUsedBuildConfiguration>Debug</LastUsedBuildConfiguration>
+    <LastUsedPlatform>Any CPU</LastUsedPlatform>
+    <SiteUrlToLaunchAfterPublish>http://jpnsample-poller.azurewebsites.net</SiteUrlToLaunchAfterPublish>
+    <LaunchSiteAfterPublish>False</LaunchSiteAfterPublish>
+    <ResourceId>/subscriptions/da7fb41d-2700-4652-b566-f8f31163b1bc/resourceGroups/dev/providers/Microsoft.Web/sites/jpnsample-poller</ResourceId>
+    <_SavePWD>True</_SavePWD>
+    <PublishUrl>https://jpnsample-poller.scm.azurewebsites.net/</PublishUrl>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <SkipExtraFilesOnServer>False</SkipExtraFilesOnServer>
+    <SelfContained>false</SelfContained>
+  </PropertyGroup>
+</Project>
