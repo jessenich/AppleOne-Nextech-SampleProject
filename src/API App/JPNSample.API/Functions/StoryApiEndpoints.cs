@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using JPNSample.API.Core;
 using JPNSample.API.Core.Cache;
 using JPNSample.API.Core.Integration.HackerNews;
 using JPNSample.API.Model;
@@ -34,26 +35,30 @@ namespace JPNSample.API.Functions
         {
             var idKeys = new List<string>() {
                 CacheKeys.NewStoriesCacheKey,
-                CacheKeys.TopStoriesCacheKey
+                CacheKeys.TopStoriesCacheKey,
+                CacheKeys.BestStoriesCacheKey
             };
 
-            IEnumerable<dynamic> getGroupedAndSplitResults(IEnumerable<CacheItem<IEnumerable<int>>> caches, string groupingKey)
+            dynamic getStoryIdGroup(IEnumerable<CacheItem<IEnumerable<int>>> caches, string storyType)
             {
-                caches = caches.Where(x => x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey] == groupingKey);
-                return caches.Select(x => new {
-                        key = x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey],
-                        count = x.Item.Count(),
-                        items = x.Item.Select(item => item)
-                });
+                var cache = caches.FirstOrDefault(x => x.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey] == storyType);
+                return new {
+                    key = cache.ExtendedProperties[CacheExtendedPropertiesConstants.StoryTypeKey],
+                    count = cache.Item.Count(),
+                    items = cache.Item
+                };
             }
 
             var cacheResults = await _cache.GetManyAsync<IEnumerable<int>>(idKeys);
-            var topResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.TopStoryTypeValue).FirstOrDefault();
-            var newResults = getGroupedAndSplitResults(cacheResults, CacheExtendedPropertiesConstants.NewStoryTypeValue).FirstOrDefault();
+            var topResults = getStoryIdGroup(cacheResults, CacheExtendedPropertiesConstants.TopStoryTypeValue);
+            var newResults = getStoryIdGroup(cacheResults, CacheExtendedPropertiesConstants.NewStoryTypeValue);
+            var bestResults = getStoryIdGroup(cacheResults, CacheExtendedPropertiesConstants.BestStoryTypeValue);
 
+            this.AddCorsHeader(req);
             return new OkObjectResult(new {
                 top = topResults,
-                @new = newResults
+                @new = newResults,
+                best = bestResults
             });
         }
 
@@ -68,13 +73,13 @@ namespace JPNSample.API.Functions
             var ids = JsonConvert.DeserializeObject<IEnumerable<int>>(await req.ReadAsStringAsync());
             var keys = ids.Select(id => string.Format(CacheKeys.StoryContentCacheKeyFormat, id.ToString()));
 
-            var stories = await _cache.GetManyAsync<HackerNewsItemsResponseModel>(keys);
+            var stories = await _cache.GetManyAsync<HackerNewsStoriesResponseModel>(keys);
 
             if (stories.Count() <= ((page - 1) * take))
                 page = 1;
 
             var storiesResponse = stories
-                .Select(story => story.Item)
+                .Select(cache => cache.Item)
                 .Where(story => story.Url != null)
                 .OrderByDescending(story => story.Id)
                 .Skip((page - 1) * take)
@@ -87,7 +92,13 @@ namespace JPNSample.API.Functions
                     createdAt = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc).AddSeconds(story.Time),
                 });
 
+            this.AddCorsHeader(req);
             return new OkObjectResult(storiesResponse);
+        }
+
+        private bool AddCorsHeader(HttpRequest request)
+        {
+            return request.HttpContext.Response.Headers.TryAdd("Access-Control-Allow-Origin", "*");
         }
     }
 }

@@ -5,7 +5,7 @@ using Newtonsoft.Json.Converters;
 
 namespace JPNSample.API.Core.Integration.HackerNews
 {
-    public class HackerNewsItemsResponseModel
+    public class HackerNewsStoriesResponseModel
     {
         public string By { get; set; } // Author
         public int Descendants { get; set; }
