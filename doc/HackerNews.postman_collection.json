@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "6ea88011-7b76-403c-91ad-298e7d171071",
+		"name": "HackerNews",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get HN Top Stories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4124bea6-a9a4-41af-aa79-09973c0d64fe",
+						"exec": [
+							"pm.environment.set(\"hn.api.articles.storyId\", pm.response.json()[0])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hn.api.articles.host}}/newstories.json?print=pretty",
+					"host": [
+						"{{hn.api.articles.host}}"
+					],
+					"path": [
+						"newstories.json"
+					],
+					"query": [
+						{
+							"key": "print",
+							"value": "pretty"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get HN Story By Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hn.api.articles.host}}/item/21648066.json?pretty=true",
+					"host": [
+						"{{hn.api.articles.host}}"
+					],
+					"path": [
+						"item",
+						"21648066.json"
+					],
+					"query": [
+						{
+							"key": "pretty",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story Stories Static URL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    21622062,\n    21622054,\n    21621999,\n    21621993,\n    21621983,\n    21621972,\n    21621961,\n    21621954,\n    21621908,\n    21621891,\n    21621882,\n    21621877,\n    21621846,\n    21621826,\n    21621821,\n    21621816,\n    21621814,\n    21621786,\n    21621779,\n    21621768,\n    21621729,\n    21621716,\n    21621705,\n    21621703,\n    21621686,\n    21621679,\n    21621669,\n    21621646,\n    21621638,\n    21621624,\n    21621619,\n    21621613,\n    21621612,\n    21621604,\n    21621588,\n    21621563,\n    21621557,\n    21621543,\n    21621530,\n    21621528,\n    21621521,\n    21621512,\n    21621504,\n    21621489,\n    21621474,\n    21621444,\n    21621439,\n    21621411,\n    21621374,\n    21621373,\n    21621366,\n    21621364,\n    21621351,\n    21621350,\n    21621332,\n    21621329,\n    21621325,\n    21621307,\n    21621289,\n    21621281,\n    21621264,\n    21621245,\n    21621196,\n    21621182,\n    21621166,\n    21621161,\n    21621101,\n    21621090,\n    21621067,\n    21621055,\n    21621051,\n    21621018,\n    21620979,\n    21620974,\n    21620970,\n    21620969,\n    21620967,\n    21620959,\n    21620938,\n    21620937,\n    21620908,\n    21620866,\n    21620844,\n    21620814,\n    21620806,\n    21620795,\n    21620773,\n    21620765,\n    21620755\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://jpnsample-poller.azurewebsites.net/api/stories?take=30&page=2",
+					"protocol": "https",
+					"host": [
+						"jpnsample-poller",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"stories"
+					],
+					"query": [
+						{
+							"key": "take",
+							"value": "30"
+						},
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Story Stories Types Static URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jpnsample-poller.azurewebsites.net/api/types",
+					"protocol": "https",
+					"host": [
+						"jpnsample-poller",
+						"azurewebsites",
+						"net"
+					],
+					"path": [
+						"api",
+						"types"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
