@@ -1,84 +1,68 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {JsonObject, JsonProperty, JsonConvert, ValueCheckingMode, OperationMode} from 'json2typescript';
-import { stringify } from 'querystring';
+import { Observable } from 'rxjs';
 
 const httpOptions = {
-  headers: new HttpHeaders('Content-Type: application/json')
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  })
 };
-
-@JsonObject('StoryModel')
-export class StoryModel {
-
-  @JsonProperty('author', String)
-  author: string;
-
-  @JsonProperty('title', String)
-  title: string;
-
-  @JsonProperty('url', String)
-  url: string;
-
-  @JsonProperty('score', Number)
-  score: number;
-
-  @JsonProperty('createdAt', Date)
-  createdAt: Date;
-}
-
-@JsonObject('StoryTypeModel')
-export class StoryTypeModel {
-
-  @JsonProperty('key', String)
-  key: string;
-
-  @JsonProperty('count', Number)
-  count: number;
-
-  @JsonProperty('items', [Number])
-  items: number[];
-}
-
-@JsonObject('StoryTypeResponseModel')
-export class StoryTypeResponseModel {
-
-  @JsonProperty('top', StoryTypeModel)
-  topStories: StoryTypeModel;
-
-  @JsonProperty('new', StoryTypeModel)
-  newStories: StoryTypeModel;
-
-  // constructor(top: StoryTypeModel, newStories: StoryTypeModel) {
-
-  // }
-
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoriesService {
 
-  private jsonConvert: JsonConvert;
+  private baseUrl: string = environment.storiesApiBaseUrl;
 
-  constructor(private baseUrl: string, private http: HttpClient) {
-    this.jsonConvert = new JsonConvert();
-    this.jsonConvert.ignorePrimitiveChecks = false;
-    this.jsonConvert.valueCheckingMode = ValueCheckingMode.ALLOW_OBJECT_NULL;
-    this.jsonConvert.operationMode = OperationMode.ENABLE;
+  constructor(private httpClient: HttpClient) { }
+
+  getStoryTypes(): Observable<StoryTypeResponseModel> {
+    // Make call to story IDs endpoint
+    return this.httpClient.get<StoryTypeResponseModel>(`${this.baseUrl}/api/types`, httpOptions);
   }
 
-  getStoryTypes(): StoryTypeResponseModel {
-    const typesResponse = this.http.get(`${this.baseUrl}/api/types`, httpOptions);
-    return this.jsonConvert.deserialize(typesResponse, StoryTypeResponseModel);
-  }
+  getStories(): Observable<StoryModel[]> {
+    // Get top stories from API service
+    let topStoryIds: number[];
+    let storiesIds = this.getStoryTypes().subscribe(result => {
+      topStoryIds = result.newStories.items
+    });
 
-  getStories() {
-    const storiesResponse = this.http.post(`${this.baseUrl}/api/stories`, JSON.stringify(this.getStoryTypes().top), httpOptions);
-    return this.jsonConvert.deserialize(storiesResponse, [StoryModel]);
+    if (topStoryIds === undefined)
+      return null;
+
+    // Convert to JSON for request post body
+    const jsonBody = JSON.stringify(topStoryIds);
+
+    // Make call to stories endpoint to get story content objects
+    return this.httpClient.post<StoryModel[]>(`${this.baseUrl}/api/stories`, jsonBody, httpOptions);
   }
 }
 
+export interface StoryModel {
+  id: number;
+  type: string;
+  author: string;
+  title: string;
+  url: string;
+  score: number;
+  createdAt: Date;
+}
+
+export interface StoryTypeModel {
+  key: string;
+  count: number;
+  items: Array<number>;
+}
+
+export interface StoryTypeResponseModel {
+  topStories: StoryTypeModel;
+  newStories: StoryTypeModel;
+  bestStories: StoryTypeModel;
+}
 
 
 
