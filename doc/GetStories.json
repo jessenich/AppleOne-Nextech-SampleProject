@@ -1,0 +1,160 @@
+// Request:
+// ----------------------------
+// URL: https://jpnsample-poller.azurewebsites.net/api/types
+// cURL Request:
+// curl -X GET \
+//   https://jpnsample-poller.azurewebsites.net/api/types \
+//   -H 'Accept: */*' \
+//   -H 'Accept-Encoding: gzip, deflate' \
+//   -H 'Cache-Control: no-cache' \
+//   -H 'Connection: keep-alive' \
+//   -H 'Cookie: ARRAffinity=688865f4b126d9a2689af6a807e26f75cf01fc7fbfaa92579fa6b98c3e00f82e' \
+//   -H 'Host: jpnsample-poller.azurewebsites.net' \
+//   -H 'cache-control: no-cache'
+
+
+
+
+
+
+
+// Response
+// ----------------------------
+
+[
+    {
+        "id": 21621779,
+        "type": "story",
+        "author": "brdrlinegenius",
+        "title": "Show HN: Independent Watch OS Workout App",
+        "url": "https://apps.apple.com/us/app/kegel-coach/id1486641210?ls=1",
+        "score": 1,
+        "createdAt": "2019-11-24T17:18:23Z"
+    },
+    {
+        "id": 21621768,
+        "type": "story",
+        "author": "dsr12",
+        "title": "The Richest Person in the World Just Gave $98.5M to Help the Homeless",
+        "url": "https://www.forbes.com/sites/angelauyeung/2019/11/22/the-richest-person-in-the-world-just-gave-985-million-to-help-the-homeless",
+        "score": 4,
+        "createdAt": "2019-11-24T17:16:28Z"
+    },
+    {
+        "id": 21621729,
+        "type": "story",
+        "author": "maxchurilov",
+        "title": "Top risks of outsourcing and how to mitigate them",
+        "url": "https://www.mindk.com/blog/risks-of-outsourcing/",
+        "score": 1,
+        "createdAt": "2019-11-24T17:11:47Z"
+    },
+    {
+        "id": 21621716,
+        "type": "story",
+        "author": "frkmollick",
+        "title": "Time Series Analysis in Python",
+        "url": "https://www.codespeedy.com/time-series-analysis-in-python/",
+        "score": 3,
+        "createdAt": "2019-11-24T17:10:14Z"
+    },
+    {
+        "id": 21621705,
+        "type": "story",
+        "author": "kennyledet",
+        "title": "Show HN: Refer.tools/Referend, A social network for incentivized referrals",
+        "url": "https://refer.tools",
+        "score": 1,
+        "createdAt": "2019-11-24T17:09:03Z"
+    },
+    {
+        "id": 21621703,
+        "type": "story",
+        "author": "rickdeveloper",
+        "title": "CS1114 Section 6: Convolution (2013) [pdf]",
+        "url": "http://www.cs.cornell.edu/courses/cs1114/2013sp/sections/S06_convolution.pdf",
+        "score": 1,
+        "createdAt": "2019-11-24T17:08:38Z"
+    },
+    {
+        "id": 21621686,
+        "type": "story",
+        "author": "zzbn00",
+        "title": "Coding Conventions in FFTW",
+        "url": "https://github.com/FFTW/fftw3/blob/master/CONVENTIONS",
+        "score": 3,
+        "createdAt": "2019-11-24T17:06:31Z"
+    },
+    {
+        "id": 21621679,
+        "type": "story",
+        "author": "octosphere",
+        "title": "Dril",
+        "url": "https://en.wikipedia.org/wiki/Dril",
+        "score": 2,
+        "createdAt": "2019-11-24T17:05:45Z"
+    },
+    {
+        "id": 21621669,
+        "type": "story",
+        "author": "avonmach",
+        "title": "Greenland Is Not for Sale. But It Has the Rare Earth Minerals America Wants",
+        "url": "https://www.npr.org/2019/11/24/781598549/greenland-is-not-for-sale-but-it-has-the-rare-earth-minerals-america-wants",
+        "score": 1,
+        "createdAt": "2019-11-24T17:04:33Z"
+    },
+    {
+        "id": 21621638,
+        "type": "story",
+        "author": "Jaruzel",
+        "title": "Nofb.pw – Visiting Facebook so you don't have to",
+        "url": "https://nofb.pw/",
+        "score": 2,
+        "createdAt": "2019-11-24T17:00:06Z"
+    },
+    {
+        "id": 21621624,
+        "type": "story",
+        "author": "fmoralesc",
+        "title": "We can have nice things – justinmk vimconf 2019",
+        "url": "https://www.youtube.com/watch?v=Bt-vmPC_-Ho",
+        "score": 2,
+        "createdAt": "2019-11-24T16:58:41Z"
+    },
+    {
+        "id": 21621613,
+        "type": "story",
+        "author": "slowenough",
+        "title": "Show HN: Boogeh – play audio from the web, even on phone lockscreen",
+        "url": "https://boogeh.com",
+        "score": 1,
+        "createdAt": "2019-11-24T16:57:18Z"
+    },
+    {
+        "id": 21621612,
+        "type": "story",
+        "author": "0db532a0",
+        "title": "man 7 sched",
+        "url": "http://man7.org/linux/man-pages/man7/sched.7.html",
+        "score": 2,
+        "createdAt": "2019-11-24T16:57:14Z"
+    },
+    {
+        "id": 21621604,
+        "type": "story",
+        "author": "skovorodkin",
+        "title": "On the Expressive Power of Programming Languages [video]",
+        "url": "https://www.youtube.com/watch?v=43XaZEn2aLc",
+        "score": 2,
+        "createdAt": "2019-11-24T16:56:17Z"
+    },
+    {
+        "id": 21621588,
+        "type": "story",
+        "author": "phwd",
+        "title": "HTTP Request Smuggling: How Did Tons of People Like Me on Tinder?",
+        "url": "https://mustafairan.wordpress.com/2019/11/23/tindere/",
+        "score": 3,
+        "createdAt": "2019-11-24T16:53:45Z"
+    }
+]
