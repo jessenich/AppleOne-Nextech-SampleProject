@@ -306,8 +306,39 @@
     </div>
   </div>
 
-  <div class="mat-app-background data-table-container">
-    <app-data-table>loading</app-data-table>
+  <div class="data-table-container mat-elevation-z8">
+
+    <mat-table [dataSource]="storiesDataSource" matSort>
+  
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="author">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Author </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.author}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="title">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Title </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.title}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="score">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Score </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.score}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> URL </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.url}} </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="columns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columns;">
+      </mat-row>
+    </mat-table>
   </div>
 
 </div>

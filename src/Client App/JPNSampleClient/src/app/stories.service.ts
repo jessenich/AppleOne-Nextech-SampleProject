@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -27,12 +27,12 @@ export class StoriesService {
   getStories(): Observable<StoryModel[]> {
     // Get top stories from API service
     let topStoryIds: number[];
-    let storiesIds = this.getStoryTypes().subscribe(result => {
+    let storiesIds = this.getStoryTypes().toPromise().then(result => {
       topStoryIds = result.newStories.items
     });
 
     if (topStoryIds === undefined)
-      return null;
+      topStoryIds = [];
 
     // Convert to JSON for request post body
     const jsonBody = JSON.stringify(topStoryIds);
