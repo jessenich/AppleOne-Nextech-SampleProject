@@ -103,7 +103,7 @@ namespace JPNSample.API.Functions
                 .Take(take)
                 .Select(story => new {
                     id = story.Id,
-                    type = story.Type,
+                    type = story.Type.GetEnumMemberStringValue(),
                     author = story.By,
                     title = story.Title,
                     url = story.Url,
