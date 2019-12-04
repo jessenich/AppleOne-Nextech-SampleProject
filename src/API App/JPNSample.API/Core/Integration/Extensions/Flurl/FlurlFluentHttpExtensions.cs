@@ -16,6 +16,8 @@ namespace JPNSample.API.Core.Integration.Extensions.Flurl
             if (!flurlUrl.ToString(true).Contains("https"))
                 url = url.Replace("http", "https");
 
+            flurlUrl.ThrowIfNotValidUrl();
+
             return url;
         }
 
