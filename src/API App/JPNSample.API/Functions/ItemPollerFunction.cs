@@ -47,7 +47,7 @@ namespace JPNSample.API.Functions
 
                 var pager = new AsynchronousTaskPager<int, HackerNewsStoriesResponseModel>(orderedIds, logger);
                 pager.ResultSelector = id => _hackerNewsClient.GetStoryByIdAsync(id, cancellationToken);
-                await pager.RunAsync(100);
+                await pager.RunAsync(take: 100, limit: null);
             }
             catch (Exception ex)
             {
