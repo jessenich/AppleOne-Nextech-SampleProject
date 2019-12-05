@@ -35,10 +35,10 @@ namespace JPNSample.API.Core.Integration.HackerNews
                 })
                 .ThrowIfNotValidUrl();
 
-            _logger.LogDebug($"Base URL constructed successfully: {_baseFlurlUrl.ToString(encodeSpaceAsPlus: true)}");
-
             _cache = cacheProvider ?? throw new ArgumentNullException(nameof(cacheProvider));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            _logger.LogDebug($"Base URL constructed successfully: {_baseFlurlUrl.ToString(encodeSpaceAsPlus: true)}");
         }
 
         public async Task<HackerNewsStoriesResponseModel> GetStoryByIdAsync(int id, CancellationToken cancellationToken = default)
